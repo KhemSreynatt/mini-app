@@ -28,7 +28,7 @@
                 }
             }
 
-        function detectBluetooths() {
+            function detectBluetooths() {
             if (!navigator.bluetooth) {
                 document.getElementById('bluetooth_output').textContent = 'Web Bluetooth API is not supported in this browser.';
                 return;
@@ -44,9 +44,10 @@
                 document.getElementById('bluetooth_output').textContent = 'Scanning started...';
 
                 navigator.bluetooth.addEventListener('advertisementreceived', event => {
-                    console.log('Device found:', event.device.name || 'Unknown');
+                    console.log('Device found:', event.device);
                     document.getElementById('devide_name').textContent = event.device.name || 'Unknown';
                     document.getElementById('rssi').textContent = event.rssi;
+                    document.getElementById('device_id').textContent = event.device.id;
                 });
             })
             .catch(error => {
