@@ -6,13 +6,22 @@
     <title>Bluetooth Scanner</title>
 </head>
 <body>
+   <div style="background-color: white;">
     <h1>Bluetooth Scanner</h1>
+    <button onclick="openLinkForAndroid()">Opent Chrome</button>
     <button onclick="detectBluetooths()">Scan for Bluetooth Devices</button>
+    
     <p id="bluetooth_output">Status: Not started</p>
     <p>Device Name: <span id="devide_name">N/A</span></p>
     <p>RSSI: <span id="rssi">N/A</span></p>
+   </div>
 
     <script>
+          function openLinkForAndroid() {
+            const url = window.location.href;
+            Telegram.WebApp.openLink(url);
+        
+        }
         function detectBluetooths() {
             if (!navigator.bluetooth) {
                 document.getElementById('bluetooth_output').textContent = 'Web Bluetooth API is not supported in this browser.';
