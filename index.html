@@ -9,11 +9,12 @@
    <div style="background-color: white;">
     <h1>Bluetooth Scanner</h1>
     <button onclick="openLinkForAndroid()">Opent Chrome</button>
-    <button onclick="detectBluetooths()">Scan for Bluetooth Devices</button>
     
-    <p id="bluetooth_output">Status: Not started</p>
-    <p>Device Name: <span id="devide_name">N/A</span></p>
-    <p>RSSI: <span id="rssi">N/A</span></p>
+    <h1>Bluetooth Scanner</h1>
+    <button id="startScanButton">Start Scanning</button>
+    <div id="devices"></div>
+
+    <script src="scanner.js"></script>
    </div>
 
     <script>
@@ -28,33 +29,9 @@
                 }
             }
 
-            function detectBluetooths() {
-            if (!navigator.bluetooth) {
-                document.getElementById('bluetooth_output').textContent = 'Web Bluetooth API is not supported in this browser.';
-                return;
-            }
+            document.getElementById('startScanButton').addEventListener('click', scanAndSendBluetoothDevices);
 
-            document.getElementById('bluetooth_output').textContent = 'Web Bluetooth API is supported.';
 
-            navigator.bluetooth.requestLEScan({
-                acceptAllAdvertisements: true
-            })
-            .then(() => {
-                console.log('Scanning started...');
-                document.getElementById('bluetooth_output').textContent = 'Scanning started...';
-
-                navigator.bluetooth.addEventListener('advertisementreceived', event => {
-                    console.log('Device found:', event.device);
-                    document.getElementById('devide_name').textContent = event.device.name || 'Unknown';
-                    document.getElementById('rssi').textContent = event.rssi;
-                    document.getElementById('device_id').textContent = event.device.id;
-                });
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('bluetooth_output').textContent = 'Error: ' + error.message;
-            });
-        }
     </script>
 </body>
 </html>
