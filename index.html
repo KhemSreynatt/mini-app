@@ -18,10 +18,16 @@
 
     <script>
           function openLinkForAndroid() {
-            const url = 'https://khemsreynatt.github.io/mini-app/';
-            Telegram.WebApp.openLink(url);
-        
-        }
+                const url = 'https://khemsreynatt.github.io/mini-app/';
+                
+                if (window.Telegram && Telegram.WebApp) {
+                    Telegram.WebApp.openLink(url);
+                } else {
+                    console.log("Telegram WebApp not detected. Opening in a new tab...");
+                    window.open(url, "_blank");
+                }
+            }
+
         function detectBluetooths() {
             if (!navigator.bluetooth) {
                 document.getElementById('bluetooth_output').textContent = 'Web Bluetooth API is not supported in this browser.';
