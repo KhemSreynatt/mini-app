@@ -38,27 +38,28 @@
             }
 
             document.getElementById('startScanButton').addEventListener('click', scanAndSendBluetoothDevices);
-            function detectionBlue(){
-                if (!navigator.bluetooth) {
-                    console.error('Web Bluetooth API is not supported in this browser.');
-                } else {
-                    navigator.bluetooth.requestDevice({
-                        acceptAllDevices: true, // Accept all nearby devices
-                        optionalServices: [] // No need to specify services
-                    })
+            function detectionBlue() {
+            if (!navigator.bluetooth) {
+                console.error('Web Bluetooth API is not supported in this browser.');
+            } else {
+                navigator.bluetooth.requestDevice({
+                    acceptAllDevices: true, // Accept all nearby devices
+                    optionalServices: [] // No need to specify services
+                })
                     .then(device => {
                         console.log('Detected Bluetooth Device:');
                         console.log('Name:', device.name); // Device name (if available)
                         console.log('ID:', device.id); // Device ID
                         console.log('UUID:', device.uuid); // Device UUID
                         console.log('Is nearby:', true); // Device is nearby
+                        document.getElementById('dectionInfo').textContent = `Name:${device.name} ID:${device.id}`
                     })
                     .catch(error => {
                         console.error('Error detecting Bluetooth devices:', error);
                     });
-                        }
-                        
             }
+
+        }
 
             function getDeviceInfo(device) {
                 if (!navigator.bluetooth) {
