@@ -12,6 +12,7 @@
     <button onclick="detectAndVerifyDeviceName()">Scan for Bluetooth Devices</button>
     <button id="scanButton">Scan Bluetooth</button>
     <div id="result"></div>
+    <div id="results"></div>
 
     <script>
         // Function to detect and verify a Bluetooth device by name
@@ -43,15 +44,17 @@
         document.getElementById('scanButton').addEventListener('click', async () => {
             if (!navigator.bluetooth) {
                 console.error('Web Bluetooth API not supported in this browser.');
+                document.getElementById('results').textContent = 'Web Bluetooth not supported this browser!!';
                 return;
             }
 
             try {
                 const scan = await navigator.bluetooth.requestLEScan({
-                    filters: [{ name: 'MyDevice' }] // Replace 'MyDevice' with the actual device name
+                    filters: [{ name: 'Holy-IOT' }] // Replace 'MyDevice' with the actual device name
                 });
 
                 console.log('Scanning started for MyDevice...');
+                document.getElementById('results').textContent = 'Web Bluetooth  supported this browser!!';
 
                 navigator.bluetooth.addEventListener('advertisementreceived', event => {
                     console.log('✅ Device found:', event.device.name || 'Unnamed Device');
