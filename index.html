@@ -14,11 +14,12 @@
 <body>
    <div style="background-color: white;">
     <h1>Bluetooth Scanner</h1>
-    <button onclick="openLinkForAndroid()">Opent Chrome</button>
+    <!-- <button onclick="openLinkForAndroid()">Opent Chrome</button> -->
     <button onclick="detectionBlue()">Bluetooth</button>
+    <button onclick="getDeviceInfo()">getDeviceInfo</button>
     
     <h1>Bluetooth Scanner</h1>
-    <button id="startScanButton">Start Scanning</button>
+    <!-- <button id="startScanButton">Start Scanning</button> -->
     <div id="devices"></div>
 
     <script src="scanner.js"></script>
@@ -38,20 +39,39 @@
 
             document.getElementById('startScanButton').addEventListener('click', scanAndSendBluetoothDevices);
             function detectionBlue(){
-                navigator.bluetooth.requestDevice({
-                acceptAllDevices: true, // Accept all nearby devices
-                optionalServices: [] // No need to specify services
-            })
-            .then(device => {
-                console.log('Detected Bluetooth Device:');
-                console.log('Name:', device.name); // Device name (if available)
-                console.log('ID:', device.id); // Device ID
-                console.log('UUID:', device.uuid); // Device UUID
-                console.log('Is nearby:', true); // Device is nearby
-            })
-            .catch(error => {
-                console.error('Error detecting Bluetooth devices:', error);
-            });
+                if (!navigator.bluetooth) {
+                    console.error('Web Bluetooth API is not supported in this browser.');
+                } else {
+                    navigator.bluetooth.requestDevice({
+                        acceptAllDevices: true, // Accept all nearby devices
+                        optionalServices: [] // No need to specify services
+                    })
+                    .then(device => {
+                        console.log('Detected Bluetooth Device:');
+                        console.log('Name:', device.name); // Device name (if available)
+                        console.log('ID:', device.id); // Device ID
+                        console.log('UUID:', device.uuid); // Device UUID
+                        console.log('Is nearby:', true); // Device is nearby
+                    })
+                    .catch(error => {
+                        console.error('Error detecting Bluetooth devices:', error);
+                    });
+                        }
+                        
+            }
+
+            function getDeviceInfo(device) {
+                if (!navigator.bluetooth) {
+                    console.error('Web Bluetooth API is not supported in this browser.');
+                } else {
+                    navigator.bluetooth.getDevices().then((devices) => {
+                    devices.forEach(
+                        device => {
+                            console.log('Device:', device.name);
+                        });
+                    });
+                }
+               
             }
 
 
