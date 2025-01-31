@@ -5,10 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bluetooth Scanner</title>
 </head>
+<style>
+    .button{
+        height: 40px;
+        width: 200px;   
+    }
+</style>
 <body>
    <div style="background-color: white;">
     <h1>Bluetooth Scanner</h1>
     <button onclick="openLinkForAndroid()">Opent Chrome</button>
+    <button onclick="detectionBlue()">Bluetooth</button>
     
     <h1>Bluetooth Scanner</h1>
     <button id="startScanButton">Start Scanning</button>
@@ -30,6 +37,22 @@
             }
 
             document.getElementById('startScanButton').addEventListener('click', scanAndSendBluetoothDevices);
+            function detectionBlue(){
+                navigator.bluetooth.requestDevice({
+                acceptAllDevices: true, // Accept all nearby devices
+                optionalServices: [] // No need to specify services
+            })
+            .then(device => {
+                console.log('Detected Bluetooth Device:');
+                console.log('Name:', device.name); // Device name (if available)
+                console.log('ID:', device.id); // Device ID
+                console.log('UUID:', device.uuid); // Device UUID
+                console.log('Is nearby:', true); // Device is nearby
+            })
+            .catch(error => {
+                console.error('Error detecting Bluetooth devices:', error);
+            });
+            }
 
 
     </script>
