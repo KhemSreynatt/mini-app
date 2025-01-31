@@ -1,47 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bluetooth Scanner</title>
 </head>
 <style>
-    .button{
+    .button {
         height: 40px;
-        width: 200px;   
+        width: 200px;
     }
 </style>
-<body>
-   <div style="background-color: white;">
-    <h1>Bluetooth Scanner</h1>
-    <!-- <button onclick="openLinkForAndroid()">Opent Chrome</button> -->
-    <button onclick="detectionBlue()">Bluetooth</button>
-    <button onclick="getDeviceInfo()">getDeviceInfo</button>
-    
-    <h1>Bluetooth Scanner</h1>
-    <!-- <button id="startScanButton">Start Scanning</button> -->
-    <div id="devices"></div>
 
-    <script src="scanner.js"></script>
-   </div>
+<body>
+    <div style="background-color: white;">
+        <h1>Bluetooth Scanner</h1>
+        <!-- <button onclick="openLinkForAndroid()">Opent Chrome</button> -->
+        <button onclick="detectionBlue()">Bluetooth</button>
+        <button onclick="getDeviceInfo()">getDeviceInfo</button>
+        <div id="dectionInfo"></div>
+        <div id="result"></div>
+
+        <h1>Bluetooth Scanner</h1>
+        <!-- <button id="startScanButton">Start Scanning</button> -->
+        <div id="devices"></div>
+
+        <script src="scanner.js"></script>
+    </div>
 
     <script>
-          function openLinkForAndroid() {
-                const url = 'https://khemsreynatt.github.io/mini-app/';
-                
-                if (window.Telegram && Telegram.WebApp) {
-                    Telegram.WebApp.openLink(url);
-                } else {
-                    console.log("Telegram WebApp not detected. Opening in a new tab...");
-                    window.open(url, "_blank");
-                }
-            }
+        function openLinkForAndroid() {
+            const url = 'https://khemsreynatt.github.io/mini-app/';
 
-            document.getElementById('startScanButton').addEventListener('click', scanAndSendBluetoothDevices);
-            function detectionBlue() {
+            if (window.Telegram && Telegram.WebApp) {
+                Telegram.WebApp.openLink(url);
+            } else {
+                console.log("Telegram WebApp not detected. Opening in a new tab...");
+                window.open(url, "_blank");
+            }
+        }
+
+        document.getElementById('startScanButton').addEventListener('click', scanAndSendBluetoothDevices);
+        function detectionBlue() {
             if (!navigator.bluetooth) {
+                document.getElementById('result').textContent = 'Web Bluetooth API is not supported in this browser.';
                 console.error('Web Bluetooth API is not supported in this browser.');
             } else {
+                document.getElementById('result').textContent = 'Web Bluetooth support your brower!';
                 navigator.bluetooth.requestDevice({
                     acceptAllDevices: true, // Accept all nearby devices
                     optionalServices: [] // No need to specify services
@@ -61,21 +67,20 @@
 
         }
 
-            function getDeviceInfo(device) {
-                if (!navigator.bluetooth) {
-                    console.error('Web Bluetooth API is not supported in this browser.');
-                } else {
-                    navigator.bluetooth.getDevices().then((devices) => {
+        function getDeviceInfo(device) {
+            if (!navigator.bluetooth) {
+                console.error('Web Bluetooth API is not supported in this browser.');
+            } else {
+                navigator.bluetooth.getDevices().then((devices) => {
                     devices.forEach(
                         device => {
                             console.log('Device:', device.name);
                         });
-                    });
-                }
-               
+                });
             }
 
-
+        }
     </script>
 </body>
+
 </html>
